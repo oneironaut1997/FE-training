@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Project;
+use App\Services\Twitter;
+
+use Illuminate\Filesystem\Filesystem;
 
 class ProjectsController extends Controller
 {
@@ -22,7 +25,16 @@ class ProjectsController extends Controller
     	return view('projects.create');
     }
 
-    public function show(Project $project) {
+    public function show(Project $project, Twitter $twitter) {
+
+        // $filesystem = app('Illuminate\Filesystem\Filesystem');
+        // $twitter = app('twitter');
+
+        dd($twitter);
+
+    // public function show(Filesystem $file) {
+
+        // dd($file->get());
 
         // $project = Project::findOrFail($id);
 

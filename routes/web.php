@@ -1,6 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Filesystem\Filesystem;
+
+// app()->bind('example', function () {
+// app()->singleton('App\Example', function () {
+
+// 	dd('called');
+// 	return new \App\Example;
+// });
+
+ app()->singleton('App\Services\Twitter', function () {
+ 	// return new Twitter('asasas');
+ 	return new \App\Services\Twitter('asdsadsadas');
+ });
+
+// 
+Route::get('/', function () {
+	// dd(app(Filesystem::class));
+	// dd(app('example'), app('example'));
+	dd(app('App\Example'));
+
+	return view('welcome');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +47,15 @@ use Illuminate\Support\Facades\Route;
 
  Route::resource('projects', 'ProjectsController');
 
-Route::get('/', 'PagesController@home');
+// Route::get('/', 'PagesController@home');
 Route::get('/about-us', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
 Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
-Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+// Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+
+Route::post('/completed-tasks/{task}', 'CompletedTasksController@store');
+Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 
 // Route::get('/projects', 'ProjectsController@index');
 // Route::get('/projects/create', 'ProjectsController@create');
