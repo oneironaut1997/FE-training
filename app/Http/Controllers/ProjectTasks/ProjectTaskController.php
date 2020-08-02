@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ProjectTasks;
 
 use App\Task;
 use App\Project;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class ProjectTasksController extends Controller
+class ProjectTaskController extends Controller
 {
 
 	public function store(Project $project) {

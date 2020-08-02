@@ -6,6 +6,10 @@
 	
 	<h1 class="title">{{ $project->title }}</h1>
 
+{{-- 	@can('update', $project)
+		<a href="">Update</a>
+	@endcan --}}
+	
 	<div class="cotent">
 		{{ $project->description }}
 		<p>
@@ -40,7 +44,7 @@
 
 	<!-- add new task here -->
 
-	<form method="POST" action="/projects/{{ $project->id }}/tasks" class="box">
+	<form method="POST" action="{{ route('web.projects.store', ['project' => $project->id]) }}" class="box">
 
 		@csrf
 		<div class="field">

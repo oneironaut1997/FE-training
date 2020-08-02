@@ -30,4 +30,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'twitter' => [
+        'key' => env('TWITTER_KEY'),
+        'secret' => env('TWITTER_SECRET')
+    ],
+
+    'stripe' => [
+        'token' => ''
+    ]
+
 ];

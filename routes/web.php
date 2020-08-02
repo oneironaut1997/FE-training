@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Filesystem\Filesystem;
 
+use App\Services\Twitter;
+use App\Repositories\UserRepository;
+
 // app()->bind('example', function () {
 // app()->singleton('App\Example', function () {
 
@@ -10,19 +13,38 @@ use Illuminate\Filesystem\Filesystem;
 // 	return new \App\Example;
 // });
 
- app()->singleton('App\Services\Twitter', function () {
- 	// return new Twitter('asasas');
- 	return new \App\Services\Twitter('asdsadsadas');
- });
+ // app()->singleton('App\Services\Twitter', function () {
+ // 	// return new Twitter('asasas');
+ // 	return new \App\Services\Twitter('asdsadsadas');
+ // });
 
 // 
-Route::get('/', function () {
+// Route::get('/', function () {
+// 	// dd(app(Filesystem::class));
+// 	// dd(app('example'), app('example'));
+// 	dd(app('App\Example'));
+
+// 	return view('welcome');
+// });
+
+Route::get('/', function (Twitter $twitter) {
 	// dd(app(Filesystem::class));
 	// dd(app('example'), app('example'));
-	dd(app('App\Example'));
+	// dd(app('foo'));
+	dd($twitter);
 
 	return view('welcome');
 });
+
+//  Route::get('/', function (UserRepository $users) {
+// 	// dd(app(Filesystem::class));
+// 	// dd(app('example'), app('example'));
+// 	// dd(app('foo'));
+// 	dd($users);
+
+// 	return view('welcome');
+// });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -45,17 +67,21 @@ Route::get('/', function () {
  DELETE /projects/1 (destroy)
 */
 
- Route::resource('projects', 'ProjectsController');
+ Route::resource('projects', 'ProjectsController')->middleware('can:update,project');
+ // Route::resource('projects', 'ProjectsController');
 
 // Route::get('/', 'PagesController@home');
-Route::get('/about-us', 'PagesController@about');
-Route::get('/contact', 'PagesController@contact');
+Route::get('about-us', 'PagesController@about');
+Route::get('contact', 'PagesController@contact');
 
-Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
-// Route::patch('/tasks/{task}', 'ProjectTasksController@update');
+Route::namespace('ProjectTasks')->prefix('projects')->name('web.projects.')->group(function () {
+	Route::post('{project}/tasks/store', 'ProjectTaskController@store')->name('store');
+});
 
-Route::post('/completed-tasks/{task}', 'CompletedTasksController@store');
-Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
+// Route::patch('tasks/{task}', 'ProjectTasksController@update');
+
+Route::post('completed-tasks/{task}', 'CompletedTasksController@store');
+Route::delete('completed-tasks/{task}', 'CompletedTasksController@destroy');
 
 // Route::get('/projects', 'ProjectsController@index');
 // Route::get('/projects/create', 'ProjectsController@create');
@@ -88,3 +114,7 @@ Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 // Route::get('/contact', function () {
 //     return view('contact');
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
