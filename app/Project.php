@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Mail\ProjectCreated;
+// use App\Events\ProjectCreated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
 	protected $guarded = [];
+
+	// protected $dispachesEvents = [
+	// 	'created' => ProjectCreated::class
+	// ];
 
 	// protected static function boot() {
 
